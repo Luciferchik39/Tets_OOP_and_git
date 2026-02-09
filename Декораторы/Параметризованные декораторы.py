@@ -1,1 +1,2 @@
-print('Начинаем !')
+print('Ошибка ?!')
+print('Hello people')

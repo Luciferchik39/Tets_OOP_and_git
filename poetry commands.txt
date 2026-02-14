@@ -1,0 +1,19 @@
+poetry add - добавить пакет
+poetry remove - удалить
+
+============        poetry show - посмотреть       =======================
+
+# Дерево зависимостей
+poetry show --tree
+# Только основные
+poetry show --without dev
+# Только dev
+poetry show --only dev
+# Устаревшие пакеты
+poetry show --outdated
+
+=================================
+poetry update - обновить
+poetry run - запустить
+poetry.lock - коммитить в git
+.venv - не коммититьa

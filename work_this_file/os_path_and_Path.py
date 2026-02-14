@@ -74,7 +74,7 @@ print(Path('Ilya.txt').exists())
 print(Path('/Users/Ilya/Documents/My_project/Project_path_to_the_offer').exists())
 
 # проверка на фаил или директорию (папку)
-print(Path('../mane.py').is_file())
+print(Path('../main.py').is_file())
 print(Path('../../').is_file())
 print(Path('../../').is_dir())
 
@@ -114,17 +114,17 @@ print(b.exists())
 if my_dir.exists() and my_dir.is_dir():
     if not any(my_dir.iterdir()):  # проверка на пустоту
         my_dir.rmdir()
-        print(f'папка удалена')
+        print('папка удалена')
 
 if a.exists() and a.is_dir():
     if not any(a.iterdir()):  # проверка на пустоту
         a.rmdir()
-        print(f'папка удалена')
+        print('папка удалена')
 
 if b.exists() and b.is_dir():
     if not any(b.iterdir()):  # проверка на пустоту
         b.rmdir()
-        print(f'папка удалена')
+        print('папка удалена')
 my_dir = Path('C:/').joinpath('my_PC').joinpath('projects').joinpath('test')
 print(my_dir)
 print(my_dir.exists())

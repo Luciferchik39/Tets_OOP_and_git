@@ -17,13 +17,13 @@ def proces_data(data):
     # Вариант 1: Если нам нужно добавить элемент
     if hasattr(data, 'append'):
         data.append['Доаблено при 1-ом if']
-        return print(f'Полученный объект расширен')
+        return print('Полученный объект расширен')
     try:
         for item in data:
             print(f'действие с {item} из {data}')
     except Exception as e:
         print(f'получили ошибку {e}')
-        print(f'объект не итерируемый')
+        print('объект не итерируемый')
         print(f'Объект: {data}')
 
 """

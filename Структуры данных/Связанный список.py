@@ -5,7 +5,7 @@ class Node:
         self.next = None
 
     def __repr__(self):
-        return f'Объект является узлом'
+        return f'Объект {self.obj} является узлом'
 
 
 class New_cls:
@@ -13,7 +13,7 @@ class New_cls:
         self.head = None
 
     def __repr__(self):
-        return f'контейнер связного списка'
+        return 'контейнер связного списка'
 
 my_list = New_cls()
 my_list.head = Node(1)

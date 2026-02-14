@@ -17,7 +17,6 @@
 
 - guarded_checkout(forbidden_categories, max_base_total, allowed_cities)
 """
-from test import items
 
 ALLOWED_CITIES = ["Berlin", "Hamburg", "Munich"]
 FORBIDDEN_CATEGORIES = {"alcohol", "tobacco"}
@@ -51,17 +50,18 @@ def validate_order(order, allowed_cities):
         if i not in order:
             errors.append(f"Отсутствует обязательное поле: {i}")
             return errors
-    if errors: return False, errors
+    if errors:
+        return False, errors
 
     if not isinstance(order["customer_id"], str) or not order["customer_id"].strip():
         errors.append('поле customer_id должно быть не пустой строкой')
 
     if not isinstance(order['city'], str):
-        errors.append(f'поле city должно быть строкой')
+        errors.append('поле city должно быть строкой')
     elif order['city'] not in allowed_cities:
-        errors.append(f'в этот город не добавляем')
+        errors.append('в этот город не добавляем')
     if not isinstance(order['payment_method'], str):
-        errors.append(f'поле payment_method должно быть строкой')
+        errors.append('поле payment_method должно быть строкой')
     if order['promo_code'] is not None and not isinstance(order['promo_code'], str):
         errors.append('поле promo_code должно быть или None или строкой')
     if not isinstance(order['items'], list) or len(order["items"]) == 0:
@@ -84,11 +84,11 @@ def validate_order(order, allowed_cities):
             if not isinstance(name, str):
                 errors.append(f'Наименование товара {name} товара должен быть в виде строки')
             if not isinstance(price, int) or price <= 0:
-                errors.append(f'Цена товара должны быть целым положительным числом')
+                errors.append('Цена товара должны быть целым положительным числом')
             if not isinstance(qty, int) or qty <= 0:
-                errors.append(f'Количесвто товара не должно быть меньше одного')
+                errors.append('Количесвто товара не должно быть меньше одного')
             if not isinstance(category, str):
-                errors.append(f'Категория товара должны быть строкой')
+                errors.append('Категория товара должны быть строкой')
 
     return len(errors) == 0, errors
 
@@ -107,7 +107,7 @@ def calculate_base_total(items):
         {"sku": "B7", "name": "Book", "price": 4000, "qty": 1, "category": "books"},
     ]
     for item in items:
-    pass
+        pass
 
 
 def calculate_discount(items, base_total, promo_code):
@@ -151,4 +151,4 @@ receipt = checkout(order)
 print(receipt)
 
 if __name__ == "__main__":
-    main()
+    pass

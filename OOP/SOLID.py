@@ -138,3 +138,98 @@ print()
 
 print("=== Полная информация ===")
 a.display_info()
+
+
+"""
+O — Open/Closed Principle (Принцип открытости/закрытости)
+Ваше понимание: класс должен быть открыт для расширения, но закрыт для изменения.
+Что значит "закрыт для изменения"?
+Это значит, что вы не должны переписывать уже существующий, работающий код класса, когда хотите добавить новую функциональность.
+Простыми словами: Написал класс — и больше его не трогай. Если нужно что-то добавить — не лезь в его код, а расширь его (через наследование или композицию).
+"""
+
+# ПЛОХО: приходится изменять класс
+class DiscountCalculator:
+    def calculate(self, customer_type, amount):
+        if customer_type == "обычный":
+            return amount * 0.9
+        elif customer_type == "vip":  # Добавили новый тип — изменили код!
+            return amount * 0.8
+
+# ХОРОШО: класс закрыт для изменения, открыт для расширения
+class DiscountCalculator:
+    def calculate(self, amount):
+        return amount  # базовая логика
+
+class RegularDiscount(DiscountCalculator):
+    def calculate(self, amount):
+        return amount * 0.9
+
+class VIPDiscount(DiscountCalculator):
+    def calculate(self, amount):
+        return amount * 0.8
+
+
+"""
+L — Liskov Substitution Principle (Принцип подстановки Барбары Лисков)
+Ваше понимание: дочерние классы не должны "ломать" логику родителя.
+И второе утверждение тоже верно: дочерний и класс родителя должны быть взаимозаменяемы.
+Простыми словами: Если у вас есть функция, которая работает с родительским классом, она должна работать и с 
+любым дочерним классом, не ломаясь
+
+Классический пример нарушения:
+"""
+
+
+class Bird:
+    def fly(self):
+        return "Летит"
+
+class Duck(Bird):
+    def fly(self):
+        return "Утка летит"
+
+class Penguin(Bird):  # Пингвин — птица, но не летает!
+    def fly(self):
+        raise Exception("Пингвины не летают")
+
+# Функция ожидает, что все птицы летают
+def make_bird_fly(bird):
+    return bird.fly()
+
+make_bird_fly(Penguin())  # ОШИБКА! Принцип L нарушен
+
+
+"""
+I — Interface Segregation Principle (Принцип разделения интерфейса)
+Ваше понимание: лучше меньше, да лучше / узкоспециализированные интерфейсы.
+
+Простыми словами: Не заставляйте класс реализовывать методы, которые ему не нужны.
+"""
+
+class Worker:
+    def work(self): pass
+    def eat(self): pass
+    def sleep(self): pass
+
+class Robot(Worker):
+    def work(self): return "Работает"
+    def eat(self): raise Exception("Роботы не едят")  # !!!
+    def sleep(self): raise Exception("Роботы не спят")  # !!!
+
+class Workable:
+    def work(self): pass
+
+class Eatable:
+    def eat(self): pass
+
+class Sleepable:
+    def sleep(self): pass
+
+class Human(Workable, Eatable, Sleepable):
+    def work(self): return "Работает"
+    def eat(self): return "Ест"
+    def sleep(self): return "Спит"
+
+class Robot(Workable):
+    def work(self): return "Работает"

@@ -208,28 +208,41 @@ I — Interface Segregation Principle (Принцип разделения ин�
 """
 
 class Worker:
-    def work(self): pass
-    def eat(self): pass
-    def sleep(self): pass
+    def work(self):
+        pass
+    def eat(self):
+        pass
+    def sleep(self):
+        pass
 
 class Robot(Worker):
-    def work(self): return "Работает"
-    def eat(self): raise Exception("Роботы не едят")  # !!!
-    def sleep(self): raise Exception("Роботы не спят")  # !!!
+    def work(self):
+        return "Работает"
+    def eat(self):
+        raise Exception("Роботы не едят")  # !!!
+    def sleep(self):
+        raise Exception("Роботы не спят")  # !!!
 
 class Workable:
-    def work(self): pass
+    def work(self):
+        pass
 
 class Eatable:
-    def eat(self): pass
+    def eat(self):
+        pass
 
 class Sleepable:
-    def sleep(self): pass
+    def sleep(self):
+        pass
 
 class Human(Workable, Eatable, Sleepable):
-    def work(self): return "Работает"
-    def eat(self): return "Ест"
-    def sleep(self): return "Спит"
+    def work(self):
+        return "Работает"
+    def eat(self):
+        return "Ест"
+    def sleep(self):
+        return "Спит"
 
 class Robot(Workable):
-    def work(self): return "Работает"
+    def work(self):
+        return "Работает"

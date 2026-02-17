@@ -69,7 +69,7 @@ shutil.rmtree()	Папку и ВСЁ внутри	shutil.rmtree(path) import shu
 "Удалить ПУСТУЮ папку: .rmdir()"
 a.rmdir()
 print(f"Папка удалена: {a.exists()}")
-print(Path('../Задания/test.py').exists())
+print(Path('../Задания/задание с обработкой корзины.py').exists())
 print(Path('Ilya.txt').exists())
 print(Path('/Users/Ilya/Documents/My_project/Project_path_to_the_offer').exists())
 

@@ -70,3 +70,33 @@ with open('new_file.txt', 'r') as f:
     print(f.mode)      # Режим ('r', 'w', etc.)
     print(f.closed)    # False (пока открыт)
 print(f.closed)        # True (после with)
+
+
+"""
+Менеджер контескста это специальная конструкция управления к ресурсу
+БД, блокировки, файлы, блокировки, сессии на сайте.
+к ним необходимо подключится что либо сделать и после завершить работу
+"""
+
+with open('test.txt', 'a') as f:
+    f.write('123')
+
+class ContextManager:
+    def __enter__(self):
+        print('Вход в контекстный менеджер')
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        print('Выход из контекстного менеджера')
+        if isinstance(exc_val, KeyError):
+            print('Обработчик ключевых ошибок')
+        elif isinstance(exc_tb, IndexError):
+            print('Обработчик ошибок индекса')
+
+with ContextManager():
+    print('Объект внутри контекстного менеджера')
+
+with ContextManager():
+    raise KeyError(100)
+
+with ContextManager():
+    raise IndexError('people')

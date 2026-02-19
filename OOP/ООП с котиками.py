@@ -4,6 +4,27 @@ class SleepMixin:
     def sleep(self):
         print(f'{self.name} заснул')
 
+class Food(ABC):
+    @property
+    @abstractmethod
+    def mood_bonus(self):
+        pass
+
+class Fish(Food):
+    @property
+    def mood_bonus(self):
+        return 20
+
+    def __str__(self):
+        return 'рыба'
+
+
+class Meat(Food):
+    @property
+    def mood_bonus(self):
+        return 10
+
+
 
 class Bowl:
     def __init__(self):
@@ -29,8 +50,11 @@ class Cat:
     def meow(self):
         print(f'{self.name} мяу')
 
-    def feed(self, food):
+    def eats(self, food):
+        self.bowl.fill(food)
         self.__mood += food.mood_bonus
+        return f'Котик {self.name} поел из миски {food} и его настроение стало: {self.mood}'
+
 
 class BritishCat(Cat):
     def meow(self):
@@ -40,24 +64,23 @@ class StreetCat(Cat):
     def meow(self):
         print(f'{self.name} громко мяукает')
 
-class CrasyCat(Cat, SleepMixin):
-    pass
+class Chill_Cat(Cat, SleepMixin):
+    def meow(self):
+        print(f'{self.name} лениво зевает')
+
+
+    def sleep(self):
+        if self.mood <= 30:
+           return f'Котик {self.name} зевает и ищет место для отдыха'
+
+
+
 
 """
 Создать объект от абстрактного класса нельзя
 абстрактный класс обозначает базовый интерфейс семейсва этих классов
 """
 
-class Food(ABC):
-    @property
-    @abstractmethod
-    def mood_bonus(self):
-        pass
-
-class Fish(Food):
-    @property
-    def mood_bonus(self):
-        return 20
 
 
 class Visitor:
@@ -75,6 +98,7 @@ class Adult(Visitor):
         'взаимодействует с котом что у того настроение поднимается'
         cat.mood += 5
 
+
 class CatCafe:
     def __init__(self):
         self.cats = []
@@ -82,6 +106,7 @@ class CatCafe:
 
     def add_cat(self, cat):
         self.cats.append(cat)
+        return print(f'Котик {cat.name} теперь в кафе')
 
     def open_day(self):
         for cat in self.cats:
@@ -108,13 +133,17 @@ class CatCafe:
     #         cat = pair['cat']  # получаем кота по ключу
     #         visitor.interfact_witch_cat(cat)
 
+fish = Fish()
+print(fish.mood_bonus)
 cafe = CatCafe()
 barsik = BritishCat('Barsik', 1, Bowl())
 tom = StreetCat('Tom', 2, Bowl())
 cafe.add_cat(barsik)
 cafe.add_cat(tom)
 cafe.open_day()
-
+print('!!!!!!!!!!!')
+print(tom.eats(fish))
+print('!!!!!!!!!!!')
 pety = Child()
 olya = Adult()
 print(f"\n=== НАЧАЛЬНОЕ НАСТРОЕНИЕ ===")
@@ -127,3 +156,13 @@ cafe.visitor_action()
 print(f"\n=== НАСТРОЕНИЕ ПОСЛЕ ВЗАИМОДЕЙСТВИЯ ===")
 print(f"{barsik.name} настроение: {barsik.mood}")  # должно уменьшиться (ребёнок)
 print(f"{tom.name} настроение: {tom.mood}")        # должно увеличиться (взрослый)
+
+new_cat = Chill_Cat('Pufik', 3, Bowl())
+cafe.add_cat(new_cat)
+cafe.add_visitor(pety, new_cat)
+cafe.add_visitor(pety, new_cat)
+cafe.add_visitor(pety, new_cat)
+cafe.add_visitor(pety, new_cat)
+cafe.visitor_action()
+print(new_cat.sleep())
+print(f"{new_cat.name} настроение: {new_cat.mood}")

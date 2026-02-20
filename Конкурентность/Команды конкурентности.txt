@@ -1,0 +1,98 @@
+1️⃣ СОЗДАНИЕ ПРОЦЕССОВ
+Команда	Что делает	Пример
+Process(target=func, args=(...,))	Создает новый процесс	p = Process(target=worker, args=('Вася',))
+p.start()	Запускает процесс	p.start()
+p.join()	Ждет завершения процесса	p.join()
+p.terminate()	Принудительно убивает процесс	p.terminate()
+p.is_alive()	Проверяет, работает ли процесс	if p.is_alive():
+p.name	Имя процесса	p.name = "Мой процесс"
+p.pid	PID процесса	print(p.pid)
+p.daemon = True	Фоновый режим (убивается с родителем)	p.daemon = True
+
+2️⃣ ОЧЕРЕДИ (Queue) — безопасная передача данных
+Команда	Что делает	Пример
+Queue()	Создает очередь	q = Queue()
+q.put(item)	Кладет данные в очередь	q.put(42)
+q.get()	Забирает данные из очереди (ждет если пусто)	data = q.get()
+q.get_nowait()	Забирает или ошибка если пусто	try: data = q.get_nowait()
+q.empty()	Проверяет пуста ли очередь	if not q.empty():
+q.full()	Проверяет полна ли очередь	if not q.full():
+q.qsize()	Размер очереди (не всегда надежно)	size = q.qsize()
+
+3️⃣ PIPE (Каналы) — двусторонняя связь
+Команда	Что делает	Пример
+Pipe()	Создает пару соединений	parent, child = Pipe()
+conn.send(data)	Отправляет данные	parent.send(42)
+conn.recv()	Получает данные (ждет)	data = child.recv()
+conn.close()	Закрывает соединение	child.close()
+conn.poll()	Проверяет, есть ли данные	if parent.poll():
+
+4️⃣ ПУЛ ПРОЦЕССОВ (Pool) — массовый запуск
+Команда	Что делает	Пример
+Pool(processes=N)	Создает пул из N процессов	pool = Pool(4)
+pool.map(func, iterable)	Распределяет задачи (ждет все)	results = pool.map(square, [1,2,3])
+pool.apply(func, args=(...))	Выполняет одну функцию	result = pool.apply(worker, args=(5,))
+pool.apply_async()	Асинхронный запуск	result = pool.apply_async(worker, args=(5,))
+pool.map_async()	Асинхронный map	result = pool.map_async(square, [1,2,3])
+pool.close()	Закрывает пул для новых задач	pool.close()
+pool.join()	Ждет завершения всех задач	pool.join()
+pool.terminate()	Убивает все процессы	pool.terminate()
+
+5️⃣ РАЗДЕЛЯЕМАЯ ПАМЯТЬ
+Команда	Что делает	Пример
+Value(typecode, value)	Разделяемая переменная	counter = Value('i', 0)
+Array(typecode, sequence)	Разделяемый массив	arr = Array('d', [1.0, 2.0])
+.value	Доступ к значению Value	counter.value += 1
+[:]	Доступ к массиву	arr[:] = [3.0, 4.0]
+Типы (typecode):
+'i' — int
+'f' — float
+'d' — double
+'c' — char
+'b' — signed char
+'B' — unsigned char
+
+6️⃣ СИНХРОНИЗАЦИЯ
+Команда	Что делает	Пример
+Lock()	Блокировка	lock = Lock()
+lock.acquire()	Захватить блокировку	lock.acquire()
+lock.release()	Освободить	lock.release()
+with lock:	Контекстный менеджер	with lock: counter += 1
+RLock()	Рекурсивная блокировка	rlock = RLock()
+Semaphore(N)	Семафор на N доступов	sem = Semaphore(3)
+Event()	Событие	event = Event()
+event.set()	Установить событие	event.set()
+event.wait()	Ждать события	event.wait()
+
+
+1️⃣ Базовые PID команды
+Команда	Что делает	Пример вывода	Когда использовать
+os.getpid()	ID текущего процесса	12345	Узнать кто я
+os.getppid()	ID родительского процесса	12344	Узнать кто меня создал
+os.getpgid(pid)	ID группы процессов	12345	Узнать группу процесса
+os.getsid(pid)	ID сессии	12345	Узнать сессию процесса
+
+2️⃣ Проверка существования процессов
+Команда	Что делает	Пример
+os.kill(pid, 0)	Проверяет, жив ли процесс (не убивает)	try: os.kill(pid, 0)
+os.wait()	Ждет завершения любого дочернего	pid, status = os.wait()
+os.waitpid(pid, options)	Ждет конкретного дочернего	os.waitpid(child_pid, 0)
+os.WIFEXITED(status)	Проверяет, нормально ли завершился	if os.WIFEXITED(status):
+
+Сигналы (через signal модуль)
+python
+import os
+import signal
+
+# Основные сигналы
+signal.SIGTERM  # 15 - просьба завершиться
+signal.SIGKILL  # 9  - принудительное убийство
+signal.SIGSTOP  # 19 - остановить процесс
+signal.SIGCONT  # 18 - продолжить остановленный
+signal.SIGINT   # 2  - Ctrl+C
+
+# Отправка сигналов
+os.kill(pid, signal.SIGTERM)
+
+# Проверка сигнала
+os.kill(pid, 0)  # 0 - специальный сигнал для проверки

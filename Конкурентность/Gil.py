@@ -47,3 +47,72 @@ I/O-bound задачи -> используем потоки (threading).
 CPU-bound задачи -> используем процессы (multiprocessing) или специализированные библиотеки (NumPy и т.д.).
 Надеюсь, теперь картина стала более ясной. Если у вас появятся новые вопросы в ходе экспериментов — смело задавайте!
 """
+import os
+from concurrent.futures import ThreadPoolExecutor
+import requests
+import threading
+import time
+from datetime import datetime
+import urllib3
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+
+
+def download_site():
+    print(f"Поток {threading.current_thread().name}: Начинаю запрос")
+    response = requests.get('https://google.com', verify=False)  # ⚠️ ЗДЕСЬ ПРОИСХОДИТ БЛОКИРОВКА I/O запроса до ожидания и Gil освобождается
+    print(f"Поток {threading.current_thread().name}: Получил ответ")
+    return response.content
+
+# Создаем потоки
+start = time.time()
+threads = []
+for i in range(4):
+    t = threading.Thread(target=download_site)
+    threads.append(t)
+    t.start()
+
+for t in threads:
+    t.join()
+print(f"Время: {time.time() - start}")
+
+def func_download(url):
+    try:
+        print(f'Поток {threading.get_ident()} начинает работу с url: {url}')
+        response = requests.get(url, timeout=5, verify=False)
+        # response.content содержит байты
+        html_bytes = len(response.content)
+        print(f'Поток {threading.get_ident()} загрузил {url} его вес {html_bytes}байт')
+        return html_bytes
+    except Exception as err:
+        print(f'В потоке {threading.get_ident()} возникла ошибка {err}')
+
+
+if __name__ =='__main__':
+    start = datetime.now()
+    total_bytes = 0
+    urls = ['https://google.com',
+            'https://httpbin.org/delay/2',
+            'https://python.org',
+            'https://github.com',
+            'https://stackoverflow.com'
+            ]
+    # map() применяет функцию ко всем url и возвращает результаты в том же порядке
+    with ThreadPoolExecutor(max_workers=5) as executor:
+        results = executor.map(func_download, urls)
+
+        # results - это итератор с результатами
+        # total_bytes = sum(results)
+
+        # Можно и поэлементно:
+        for url, bytes_count in zip(urls, results):
+            print(f"{url}: {bytes_count} байт")
+            total_bytes += bytes_count
+
+    print(f"Всего загружено: {total_bytes} байт")
+    print(f'Общее время: {datetime.now() - start}')
+
+
+
+

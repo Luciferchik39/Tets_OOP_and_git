@@ -5,6 +5,10 @@ class SleepMixin:
         print(f'{self.name} заснул')
 
 class Food(ABC):
+    def __init__(self, name, colories):
+        self.name = name # название продукта
+        self.colories = colories # колорийность (в нашем случае содержание энергии)
+
     @property
     @abstractmethod
     def mood_bonus(self):
@@ -40,6 +44,7 @@ class Cat:
         self._age = age
         self.__mood = 50 # 0 - 100
         self.bowl = bowl
+
 
     @property
     def mood(self):

@@ -49,6 +49,7 @@ async def example():
 "=====================    asyncio.run() - Запуск главной корутины"
 import asyncio
 
+
 async def main():
     await asyncio.sleep(1)
     return "Готово!"

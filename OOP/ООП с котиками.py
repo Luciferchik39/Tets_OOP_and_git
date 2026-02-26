@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class SleepMixin:
     def sleep(self):
         print(f'{self.name} заснул')
@@ -151,14 +152,14 @@ print(tom.eats(fish))
 print('!!!!!!!!!!!')
 pety = Child()
 olya = Adult()
-print(f"\n=== НАЧАЛЬНОЕ НАСТРОЕНИЕ ===")
+print("\n=== НАЧАЛЬНОЕ НАСТРОЕНИЕ ===")
 print(f"{barsik.name} настроение: {barsik.mood}")
 print(f"{tom.name} настроение: {tom.mood}")
 cafe.add_visitor(pety, barsik)
 cafe.add_visitor(olya, tom)
 cafe.visitor_action()
 # Проверяем изменившееся настроение
-print(f"\n=== НАСТРОЕНИЕ ПОСЛЕ ВЗАИМОДЕЙСТВИЯ ===")
+print("\n=== НАСТРОЕНИЕ ПОСЛЕ ВЗАИМОДЕЙСТВИЯ ===")
 print(f"{barsik.name} настроение: {barsik.mood}")  # должно уменьшиться (ребёнок)
 print(f"{tom.name} настроение: {tom.mood}")        # должно увеличиться (взрослый)
 

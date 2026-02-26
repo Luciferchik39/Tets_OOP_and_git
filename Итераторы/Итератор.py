@@ -22,6 +22,7 @@ __next__() - возвращает следующий элемент или вы�
 """
 from collections.abc import Iterable, Iterator
 
+
 def check_obj(obj, name):
     print(name)
     print(f'объект {obj}')

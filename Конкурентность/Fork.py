@@ -50,9 +50,8 @@ for item in a:
 """
 
 
-import os
 from multiprocessing import Process
-
+import os
 
 # a = print(f"начинаю работу в процессе {os.getpid()}")
 #

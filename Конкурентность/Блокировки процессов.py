@@ -1,9 +1,9 @@
-from random import random
-from multiprocessing import  Process, Lock
-import os
 from datetime import datetime
+from multiprocessing import Lock, Process, RLock
+import os
+from random import random
 from time import sleep
-from multiprocessing import RLock
+
 """
 LOCK vs RLOCK:
 
@@ -76,10 +76,10 @@ class SafeList:
         with self.lock:
             print('pop_el lock захвачен Счетчик = 1')
             if self.list: # если список не пуст выполни:
-                print(f"pop: список не пуст, удаляем последний")
+                print("pop: список не пуст, удаляем последний")
                 return self.list.pop()
             else:
-                print(f"pop: список пуст, возвращаем None")
+                print("pop: список пуст, возвращаем None")
                 return None  # или можно raise IndexError
         print('pop_el завершило действи with завершил self.lock Счетчик = 0')
 

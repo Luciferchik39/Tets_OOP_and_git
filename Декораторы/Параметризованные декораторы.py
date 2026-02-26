@@ -3,6 +3,7 @@
 """
 from functools import wraps
 
+
 def my_deco_base(func):
     print('функция декоратора вызвана, этап подготовки')
     @wraps(func) # на этом этапе мы сохраняем имя и документацию функции ( иначе она превратится в wrapper).

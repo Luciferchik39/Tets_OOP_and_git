@@ -1,6 +1,5 @@
-from os import path # объект
-from pathlib import Path # импортируем КЛАССА
-
+from os import path  # объект
+from pathlib import Path  # импортируем КЛАССА
 
 """Для путей:
 from pathlib import Path

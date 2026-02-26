@@ -1,5 +1,6 @@
 from string import digits
 
+
 class User:
     count_users = 0
 
@@ -22,10 +23,10 @@ class User:
         errors = []
 
         if not isinstance(pasword, str):
-            errors.append(f'пароль должен быть строкой')
+            errors.append('пароль должен быть строкой')
             return errors
         if len(pasword) < 4 or len(pasword) > 24:
-            errors.append(f'пароль должен иметь длину в диапозоне от 4 до 24')
+            errors.append('пароль должен иметь длину в диапозоне от 4 до 24')
 
         if not User.is_number_in_pasword(pasword):
             errors.append('Пароль должен содержать цифры')
@@ -36,7 +37,7 @@ class User:
     def pasword(self):
         """Геттер - только для чтения пароля"""
         if self.__pasword is None:
-            return f'Пароль не задан'
+            return 'Пароль не задан'
         return f'Ваш пароль: {self.__pasword}'
 
     @pasword.setter
@@ -48,7 +49,7 @@ class User:
             print(f'❌ Ошибки установки пароля для пользователя {self.__name}')
             for i in erors:
                 print(f'*   {i}')
-            print(f'пороль не установлен')
+            print('пороль не установлен')
             return
         self.__pasword = value
         print(f'✅ Пароль для пользователя {self.__name} успешно установлен\n')

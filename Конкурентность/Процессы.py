@@ -23,9 +23,9 @@
 пока ты не используешь специальные библиотеки для конкурентности, Python НИКОГДА не создает дополнительные процессы или потоки автоматически.
 для всего обычного синхронного Python-кода, независимо от сложности структуры (классы, функции, циклы, условия)
 """
+from multiprocessing import Process, Queue
 import os
 from time import sleep
-from multiprocessing import Process, Queue
 
 a = print(f"начинаю работу в процессе {os.getpid()}")
 sleep(10)

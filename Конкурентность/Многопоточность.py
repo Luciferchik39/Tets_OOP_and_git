@@ -14,14 +14,12 @@ I/O боунд задачах
 
 """
 
-import time
 from concurrent.futures import ThreadPoolExecutor
-from threading import Thread
-from time import sleep
-import threading
-import os
 from datetime import datetime
-
+import os
+import threading
+from threading import Thread
+import time
 
 CNT = 0
 """

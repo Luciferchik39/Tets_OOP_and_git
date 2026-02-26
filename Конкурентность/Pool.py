@@ -1,9 +1,9 @@
-import os
-import time
-import random
-import multiprocessing
 from datetime import datetime
+import multiprocessing
 from multiprocessing import Pool, Process, Queue
+import os
+import random
+import time
 
 # =============================================================================
 # ЧАСТЬ 1: ТЕОРИЯ - ЧТО ТАКОЕ POOL
@@ -104,7 +104,7 @@ def laba(worker_id):
     start_time = time.time()
 
     try:
-        with open(filename, 'r') as f:
+        with open(filename) as f:
             for i, s in enumerate(f):
                 # Для каждой строки генерируем случайное число от 0 до числа из файла
                 result += random.randint(0, int(s))

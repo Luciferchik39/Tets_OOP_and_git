@@ -112,13 +112,13 @@ class Square:
         self.__area = None
     @property
     def sise(self):
-        print(f'сработал геттер')
+        print('сработал геттер')
         return self.__side
 
     @sise.setter
     def sise(self, new_side):
         self.__side = new_side
-        print(f'сработал сеттер')
+        print('сработал сеттер')
         self.__area = None
         return f'размер стороны куба изменён на {self.__side}'
 

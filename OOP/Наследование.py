@@ -13,6 +13,8 @@ ClassName.method(self) = "конкретный класс" (жесткая пр�
 """
 
 from abc import ABC, abstractmethod
+
+
 # 🔧 ИНСТРУМЕНТ 1: Базовое наследование
 class Animal:
     def __init__(self, name):

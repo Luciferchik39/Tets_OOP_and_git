@@ -3,8 +3,10 @@ a = yield 1
 И так объект yield возвращает generator object в котором находится информация
 при передачи его в next() мы запускаем получение объекта из generator object в нашем случае 1
 """
-import sys
 from datetime import datetime
+import sys
+
+
 def func(n):
     res = []
     cnt = 0

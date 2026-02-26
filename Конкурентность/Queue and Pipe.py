@@ -1,7 +1,6 @@
-import os
-from multiprocessing import Queue, Pipe, Process
-from time import sleep
+from multiprocessing import Process, Queue
 from queue import Empty
+from time import sleep
 
 """
 Queue — структура данных для обмена информацией между 
@@ -28,7 +27,7 @@ def worker(a:int, q:Queue):
         sleep(.1)
         q.put(cnt)
         cnt += 1
-        print(f'worker, выполняется')
+        print('worker, выполняется')
 
 def worker_2(a:int, q: Queue):
     cnt = 0

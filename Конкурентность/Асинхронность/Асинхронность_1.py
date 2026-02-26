@@ -40,10 +40,8 @@ asyncio.Lock(): Блокировка, чтобы две корутины не и
 """
 
 "Синхронно = медленно"
-import time
-from datetime import datetime
 import asyncio
-
+from datetime import datetime
 
 # def fetch_data(delay, name):
 #     print(f'начало {name}')
@@ -58,7 +56,7 @@ import asyncio
 #     print(f'время работы процесса: {datetime.now() - start}')
 
 "Асинхронно (быстро)"
-
+""
 async def fetch_data(delay, name):
     print(f'начало {name}')
     await asyncio.sleep(delay) # имитация действия и ожидания между запосом и ответом и в этот момент asyncio.sleep позволяет освободитя gil
@@ -69,12 +67,18 @@ async def my_fn():
     task_one = asyncio.create_task(fetch_data(2, "задача 1"))
     task_two = asyncio.create_task(fetch_data(2, "задача 2"))
     # Ждем выполнения обеих задач
+    """Ты говоришь: "Я сейчас встану здесь на паузу и буду ждать 5 секунд. Никуда не пойду дальше, пока эти 5 секунд не пройдут".
+Контекст: Ты не можешь делать ничего другого в этот момент в рамках текущей корутины. Ты просто ждешь."""
     res_1 = await task_one
     res_2 = await task_two
 
     return res_1, res_2
 
 async def slow_fn():
+    """Корутина "засыпает" на объекте, который умеет ждать (awaitable).
+Если упростить: она встречает ключевое слово await и говорит Event Loop'у: "Вот этот объект я должна подождать. Забери
+у меня управление, пока он не будет готов". Event Loop уходит делать другие задачи, а когда объект (например, сокет или
+таймер) сигнализирует "я готов", loop будит корутину, и она продолжается со строки после await."""
     print('первая медленная функция на 10 сек запущена')
     await asyncio.sleep(10)
     print('первая медленная функция завершилась')
@@ -95,6 +99,13 @@ async def fast_fn_2():
     print('вторая быстрая функция завершилась')
 
 async def my_fn_task():
+    """
+    Ты говоришь Event Loop'у: "Возьми эту корутину (fast_fn_2()) и запланируй её выполнение в фоне. Она сейчас начнет
+    тикать сама по себе. А я (текущая корутина) пойду дальше по коду, не дожидаясь этих 5 секунд".Нюанс: Если ты после
+    create_task не сделаешь await task, то программа может завершиться, не дождавшись окончания задачи (потому что main
+    закончился, а фоновая задача не успела). Чтобы получить результат или просто дождаться фоновой работы, тебе всё
+    равно потом нужно написать await task.
+    """
     task_four = asyncio.create_task(fast_fn_2())
     task_three = asyncio.create_task(fast_fn())
     task_one = asyncio.create_task(slow_fn())
@@ -110,6 +121,8 @@ async def my_fn_task():
 
 if __name__ == '__main__':
     start = datetime.now()
+    """asyncio.run(main()). Эта команда делает три вещи: создает новый Event Loop, запускает в нем твою корутину, а 
+    после завершения закрывает loop. Это главная точка входа."""
     asyncio.run(my_fn_task())
 
     # asyncio.run(my_fn())

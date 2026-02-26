@@ -47,12 +47,12 @@ I/O-bound задачи -> используем потоки (threading).
 CPU-bound задачи -> используем процессы (multiprocessing) или специализированные библиотеки (NumPy и т.д.).
 Надеюсь, теперь картина стала более ясной. Если у вас появятся новые вопросы в ходе экспериментов — смело задавайте!
 """
-import os
 from concurrent.futures import ThreadPoolExecutor
-import requests
+from datetime import datetime
 import threading
 import time
-from datetime import datetime
+
+import requests
 import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)

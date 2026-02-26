@@ -1,6 +1,5 @@
 from pathlib import Path
 
-
 """
     1. Запись (перезапись)
 with open('file.txt', 'w') as f:
@@ -65,7 +64,7 @@ if my_dir.exists():
     with open('new_file.txt') as test_file:
         print(test_file.read())
 
-with open('new_file.txt', 'r') as f:
+with open('new_file.txt') as f:
     print(f.name)      # Имя файла
     print(f.mode)      # Режим ('r', 'w', etc.)
     print(f.closed)    # False (пока открыт)
